@@ -229,14 +229,16 @@ def main():
 
                     # Dyn brake setup - right stick (u/d)
                     if event.axis == 3:
-                        if (joystick.get_axis(3) < -0.05 and pos_reverser != 128 and pos_throttle == 0
+                        # print(f'Joystick: {joystick.get_axis(event.axis)}')
+                        if (joystick.get_axis(3) < -0.05 and pos_reverser != 'N' and pos_throttle == 0
                                 and not active_dyn_brake):
                             active_dyn_brake = True     # Ok to go into dyn setup
                             pos_dyn_brake = 1
 
-                        elif joystick.get_axis(3) > 0.05 and pos_dyn_brake == 1 and active_dyn_brake:
+                        elif joystick.get_axis(3) > 0.05 and pos_dyn_brake <= 3 and active_dyn_brake:
                             active_dyn_brake = False    # Out of setup
                             pos_dyn_brake = 0
+
 
                 # Check for D-Pad
                 elif event.type == pygame.JOYHATMOTION:
@@ -322,10 +324,10 @@ def main():
                 if pos_dyn_brake < 1:
                     pos_dyn_brake = 1
                 time.sleep((1.05-abs(dyn_brake_dir))/10)
-                if pos_dyn_brake != previous_dyn:
-                    # print(f'Updating dynamic brake: {pos_dyn_brake}')
-                    previous_dyn = pos_dyn_brake
-                    out_sock.sendto(form_msg(r8_header_sound, cmd_dyn_brake, pos_dyn_brake), (local_ip, run8port))
+            if pos_dyn_brake != previous_dyn:
+                # print(f'Updating dynamic brake: {pos_dyn_brake}')
+                previous_dyn = pos_dyn_brake
+                out_sock.sendto(form_msg(r8_header_sound, cmd_dyn_brake, pos_dyn_brake), (local_ip, run8port))
 
     except KeyboardInterrupt:
         # Quit pygame and clean up
