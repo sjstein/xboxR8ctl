@@ -115,23 +115,14 @@ def main():
     auto_brake_dir = 0
     dyn_brake_dir = 0
 
-    # Initialize pygame
-    pygame.init()
-
-    # Initialize the joystick module
-    pygame.joystick.init()
-
-    # Check if any joysticks are connected
-    if pygame.joystick.get_count() == 0:
-        print("No joystick detected.")
+    pygame.init()   # Initialize pygame
+    pygame.joystick.init()  # Initialize the joystick module
+    if pygame.joystick.get_count() == 0:    # Check if any joysticks are connected
+        print("No controller detected.")
         return
-
-    # Initialize the first joystick
-    joystick = pygame.joystick.Joystick(0)
+    joystick = pygame.joystick.Joystick(0)      # Initialize the first joystick
     joystick.init()
-
-    print(f"Joystick detected: {joystick.get_name()}")
-
+    print(f"Controller detected: {joystick.get_name()}")
     try:
         # Main loop
         while True:
