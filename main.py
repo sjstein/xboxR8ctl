@@ -192,18 +192,18 @@ def main():
 
                     # auto brake
                     if event.axis == 1:  # left stick
-                        if joystick.get_axis(event.axis) < -0.1:   # Increase
+                        if joystick.get_axis(event.axis) < -0.5:   # Increase
                             auto_brake_dir = -1 * joystick.get_axis(event.axis)
-                        elif joystick.get_axis(event.axis) > 0.1:   # Decrease
+                        elif joystick.get_axis(event.axis) > 0.5:   # Decrease
                             auto_brake_dir = -1 * joystick.get_axis(event.axis)
                         else:
                             auto_brake_dir = 0
 
                     # Indy brake
                     if event.axis == 0:
-                        if joystick.get_axis(event.axis) > .05:   # Increase
+                        if joystick.get_axis(event.axis) > .2:   # Increase
                             indy_brake_dir = joystick.get_axis(event.axis)
-                        elif joystick.get_axis(event.axis) < -.05:   # Decrease
+                        elif joystick.get_axis(event.axis) < -.2:   # Decrease
                             indy_brake_dir = joystick.get_axis(event.axis)
                         else:
                             indy_brake_dir = 0
@@ -229,7 +229,6 @@ def main():
                         elif joystick.get_axis(3) > 0.05 and pos_dyn_brake <= 3 and active_dyn_brake:
                             active_dyn_brake = False    # Out of setup
                             pos_dyn_brake = 0
-
 
                 # Check for D-Pad
                 elif event.type == pygame.JOYHATMOTION:
@@ -279,12 +278,12 @@ def main():
                 pos_indy_brake += 1
                 if pos_indy_brake > 255:
                     pos_indy_brake = 255
-                time.sleep((1.05-indy_brake_dir)/50)
+                time.sleep((2.05-indy_brake_dir)/50)
             elif indy_brake_dir < 0:
                 pos_indy_brake -= 1
                 if pos_indy_brake < 0:
                     pos_indy_brake = 0
-                time.sleep((1.05-abs(indy_brake_dir))/50)
+                time.sleep((2.05-abs(indy_brake_dir))/50)
             if pos_indy_brake != previous_indy:
                 # print(f'Updating indy brake: {pos_indy_brake}')
                 previous_indy = pos_indy_brake
